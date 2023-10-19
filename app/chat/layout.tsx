@@ -4,7 +4,10 @@ import Conversation from "../components/Conversation";
 import { User } from "@prisma/client";
 
 export default async function ChatLayout() {
-  const users = await getUsers();
+  const users = (await getUsers()).map((user) => ({
+    ...user,
+    name: user.name?.toLowerCase() || null,
+  }));
   return (
     <div className="h-full w-full grid grid-cols-10">
       <SideBar users={users} />

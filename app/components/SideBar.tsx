@@ -8,19 +8,22 @@ const SideBar = ({ users }: { users: User[] }) => {
   const [conversations, setConversations] = useState<User[]>(users);
   const [input, setInput] = useState<string>("");
   const originalConvos = users;
-  useMemo(() => {
-    if (input) {
-      const filter = conversations.filter((convo) =>
-        convo.name?.includes(input)
+
+  const handleInputChange = (newInput: string) => {
+    setInput(newInput);
+    if (newInput) {
+      const filter = originalConvos.filter((convo) =>
+        convo.name?.includes(newInput.toLowerCase())
       );
       setConversations(filter);
     } else {
       setConversations(originalConvos);
     }
-  }, [input]);
+  };
+
   return (
     <div className="h-full col-span-3">
-      <FilterBar setInput={setInput} />
+      <FilterBar handleSearch={handleInputChange} />
       <AllConversations conversations={conversations} />
     </div>
   );
