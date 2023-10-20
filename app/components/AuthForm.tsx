@@ -20,7 +20,7 @@ const AuthForm = () => {
 
   useEffect(() => {
     if (session?.status === "authenticated") {
-      router.push("/chat");
+      router.push("/conversations");
     }
   }, [session?.status, router]);
 
@@ -50,7 +50,7 @@ const AuthForm = () => {
         )
         .then((callback) => {
           if (callback?.ok) {
-            router.push("/chat");
+            router.push("/conversations");
           }
         })
         .finally(() => setIsLoading(false));
@@ -63,7 +63,7 @@ const AuthForm = () => {
       })
         .then((callback) => {
           if (callback?.ok) {
-            router.push("/chat");
+            router.push("/conversations");
           }
         })
         .finally(() => setIsLoading(false));
@@ -76,7 +76,7 @@ const AuthForm = () => {
     signIn(action, { redirect: false })
       .then((callback) => {
         if (callback?.ok) {
-          router.push("/chat");
+          router.push("/conversations");
         }
       })
       .finally(() => setIsLoading(false));

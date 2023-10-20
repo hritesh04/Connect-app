@@ -37,7 +37,9 @@ const Signup = () => {
         onChange={(event) => setRoomId(event.target.value)}
         className="text-black"
       />
-      <button onClick={() => router.push(`/chat/${roomId}`)}>SignUp</button>
+      <button onClick={() => router.push(`/conversations/${roomId}`)}>
+        SignUp
+      </button>
     </div>
   );
 };

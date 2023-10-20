@@ -1,13 +1,31 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useState, useEffect } from "react";
 import AllConversations from "./AllConversations";
+import { Conversation, Message, User } from "@prisma/client";
 import FilterBar from "./FilterBar";
-import { User } from "@prisma/client";
+import getConversations from "../utils/getConversation";
+import NewConversation from "./NewConversation";
+interface Convo extends Conversation {
+  messages: Partial<Message>[];
+  users: User[];
+}
 
-const SideBar = ({ users }: { users: User[] }) => {
-  const [conversations, setConversations] = useState<User[]>(users);
+export default function SideBar({
+  users,
+  conversations,
+}: //children,
+{
+  users: User[];
+  conversations: Convo[];
+  //children: React.ReactNode;
+}) {
+  // const originalConvos = await getConversations();
+  const [allUsers, setAllUsers] = useState<User[]>(users);
+  const [originalConvos, setOriginalConvos] = useState<Convo[]>(conversations);
   const [input, setInput] = useState<string>("");
-  const originalConvos = users;
+  const [allConversations, setAllConversations] =
+    useState<Convo[]>(originalConvos);
+  const [isOpen, setIsOpen] = useState<Boolean>(true);
 
   const handleInputChange = (newInput: string) => {
     setInput(newInput);
@@ -15,17 +33,27 @@ const SideBar = ({ users }: { users: User[] }) => {
       const filter = originalConvos.filter((convo) =>
         convo.name?.includes(newInput.toLowerCase())
       );
-      setConversations(filter);
+      setAllConversations(filter);
     } else {
-      setConversations(originalConvos);
+      setAllConversations(originalConvos);
     }
   };
 
   return (
-    <div className="h-full col-span-3">
-      <FilterBar handleSearch={handleInputChange} />
-      <AllConversations conversations={conversations} />
-    </div>
+    <>
+      <div className="h-full col-span-3 overflow-hidden">
+        <FilterBar
+          handleSearch={handleInputChange}
+          input={input}
+          setOpen={setIsOpen}
+        />
+        {isOpen ? (
+          <NewConversation users={allUsers} />
+        ) : (
+          <AllConversations conversations={conversations} />
+        )}
+      </div>
+      {/* {children} */}
+    </>
   );
-};
-export default SideBar;
+}
