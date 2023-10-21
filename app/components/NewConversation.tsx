@@ -9,7 +9,7 @@ const NewConversation = ({ users }: { users: User[] }) => {
   const router = useRouter();
   const [user, setUser] = useState<User[]>([]);
   const [input, setInput] = useState("");
-  const searchBarRef = useRef(null);
+  const searchBarRef = useRef<HTMLInputElement>(null);
   const allUsers = users;
   const clearInput = () => {
     handleInputChange("");

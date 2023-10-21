@@ -1,4 +1,4 @@
-const EmptyConvo = () => {
+export default function EmptyConvo() {
   return (
     <div className="h-full w-full justify-center flex items-center">
       <div className="border-black border-2">
@@ -6,6 +6,4 @@ const EmptyConvo = () => {
       </div>
     </div>
   );
-};
-
-export default EmptyConvo;
+}

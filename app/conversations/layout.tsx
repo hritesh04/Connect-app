@@ -1,6 +1,5 @@
 import getUsers from "../utils/getUsers";
 import SideBar from "../components/SideBar";
-import { User, Conversation, Message } from "@prisma/client";
 import getConversations from "../utils/getConversation";
 
 export default async function ChatLayout({

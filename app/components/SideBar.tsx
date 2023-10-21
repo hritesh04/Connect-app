@@ -1,10 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import AllConversations from "./AllConversations";
 import { Conversation, Message, User } from "@prisma/client";
 import FilterBar from "./FilterBar";
-import getConversations from "../utils/getConversation";
+import { pusherClient } from "../utils/pusher";
 import NewConversation from "./NewConversation";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 interface Convo extends Conversation {
   messages: Partial<Message>[];
   users: User[];
@@ -25,7 +27,57 @@ export default function SideBar({
   const [input, setInput] = useState<string>("");
   const [allConversations, setAllConversations] =
     useState<Convo[]>(originalConvos);
-  const [isOpen, setIsOpen] = useState<Boolean>(true);
+  const [isOpen, setIsOpen] = useState<Boolean>(false);
+
+  const session = useSession();
+  const router = useRouter();
+  const pusherKey = useMemo(() => {
+    return session.data?.user?.email;
+  }, [session.data?.user?.email]);
+
+  useEffect(() => {
+    if (!pusherKey) {
+      return;
+    }
+
+    pusherClient.subscribe(pusherKey);
+
+    const updateHandler = (conversation: Convo) => {
+      setOriginalConvos((current) =>
+        current.map((currentConversation) => {
+          if (currentConversation.id === conversation.id) {
+            return {
+              ...currentConversation,
+              messages: conversation.messages,
+            };
+          }
+
+          return currentConversation;
+        })
+      );
+    };
+
+    const newHandler = (conversation: Convo) => {
+      setOriginalConvos((current) => {
+        const exisitngConvo = current.filter((c) => c.id === conversation.id);
+        if (exisitngConvo) {
+          return current;
+        }
+
+        return [conversation, ...current];
+      });
+    };
+
+    const removeHandler = (conversation: Convo) => {
+      setOriginalConvos((current) => {
+        return [...current.filter((convo) => convo.id !== conversation.id)];
+      });
+    };
+
+    pusherClient.bind("conversation:update", updateHandler);
+    pusherClient.bind("conversation:new", newHandler);
+    pusherClient.bind("conversation:remove", removeHandler);
+  }, [pusherKey, router]);
 
   const handleInputChange = (newInput: string) => {
     setInput(newInput);
