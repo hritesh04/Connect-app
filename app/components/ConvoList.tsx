@@ -3,23 +3,16 @@ import { Message, User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useState, useEffect, useMemo, useRef } from "react";
 import { pusherClient } from "../utils/pusher";
-import { useParams } from "next/navigation";
-interface convo extends Message {
+import useConversation from "../utils/useConversation";
+type convo = Message & {
   sender: User;
-}
-const ConvoList = ({ messages }: { messages: convo[] }) => {
+};
+export default function ConvoList({ messages }: { messages: convo[] }) {
   const session = useSession();
-  const params = useParams();
   const [msg, setMsg] = useState<convo[]>(messages);
   const bottomRef = useRef<HTMLDivElement>(null);
-  const conversationId = useMemo(() => {
-    if (!params?.conversationId) {
-      return "";
-    }
 
-    return params.conversationId as string;
-  }, [params?.conversationId]);
-
+  const { conversationId } = useConversation();
   useEffect(() => {
     pusherClient.subscribe(conversationId);
     bottomRef?.current?.scrollIntoView();
@@ -27,13 +20,11 @@ const ConvoList = ({ messages }: { messages: convo[] }) => {
     const messageHandler = (message: convo) => {
       setMsg((current) => {
         const exisitngMsg = current.filter((c) => c.id === message.id);
-        if (exisitngMsg) {
+        if (!exisitngMsg) {
           return current;
         }
-
         return [...current, message];
       });
-
       bottomRef?.current?.scrollIntoView();
     };
 
@@ -57,23 +48,30 @@ const ConvoList = ({ messages }: { messages: convo[] }) => {
       pusherClient.unbind("messages:new", messageHandler);
       pusherClient.unbind("message:update", updateMessageHandler);
     };
-  }, [conversationId]);
+  }, [conversationId, msg]);
 
   if (!msg) {
     console.log(messages);
     return <div>No Messages</div>;
   }
   return (
-    <div className="h-full w-full">
-      {msg.map((msg) =>
-        session?.data?.user?.email === msg.sender.email ? (
-          <div>CurrentUser is the Sender</div>
+    <div className="h-full w-full p-2 max-h-[85%] overflow-hidden overflow-y-auto">
+      {msg.map((msg) => {
+        return session?.data?.user?.email === msg.sender.email ? (
+          <div key={msg.id} className="flex w-full h-10 justify-end m-1">
+            <p className="w-fit p-2 bg-blue-600 rounded-xl text-[#f8f8e9] h-full">
+              {msg.body}
+            </p>
+          </div>
         ) : (
-          <div>OtherUser is the Sender</div>
-        )
-      )}
+          <div key={msg.id} className="flex w-full m-1 h-10 justify-start">
+            <p className="w-fit p-2 text-black bg-slate-200 rounded-xl h-full">
+              {msg.body}
+            </p>
+          </div>
+        );
+      })}
       <div ref={bottomRef} />
     </div>
   );
-};
-export default ConvoList;
+}

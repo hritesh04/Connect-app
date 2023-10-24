@@ -1,50 +1,75 @@
+"use client";
 import { Conversation, Message, User } from "@prisma/client";
-import axios from "axios";
 import { useRouter } from "next/navigation";
-interface Convo extends Conversation {
-  messages: Partial<Message>[];
+import { useSession } from "next-auth/react";
+import { pusherClient } from "../utils/pusher";
+import ConversationBox from "./ConverationBox";
+import { useState, useEffect, useMemo } from "react";
+type Convo = Conversation & {
+  messages: Message[];
   users: User[];
-}
+};
 const AllConversations = ({ conversations }: { conversations: Convo[] }) => {
+  const [allConversations, setAllConversations] = useState(conversations);
+  const session = useSession();
   const router = useRouter();
-  const handleNewConvo = async (userId: string) => {
-    await axios
-      .post("/api/conversations", {
-        userId: userId,
-      })
-      .then((data) => router.push(`/conversations/${data.data.id}`))
-      .finally(() => {
-        console.log("Done");
-      });
-  };
+  const pusherKey = useMemo(() => {
+    return session.data?.user?.email;
+  }, [session.data?.user?.email]);
 
+  useEffect(() => {
+    if (!pusherKey) {
+      return;
+    }
+
+    pusherClient.subscribe(pusherKey);
+
+    const updateHandler = (conversation: Convo) => {
+      setAllConversations((current) =>
+        current.map((currentConversation) => {
+          if (currentConversation.id === conversation.id) {
+            return {
+              ...currentConversation,
+              messages: conversation.messages,
+            };
+          }
+
+          return currentConversation;
+        })
+      );
+    };
+
+    const newHandler = (conversation: Convo) => {
+      setAllConversations((current) => {
+        const exisitngConvo = current.filter((c) => c.id === conversation.id);
+        if (exisitngConvo) {
+          return current;
+        }
+
+        return [conversation, ...current];
+      });
+    };
+
+    const removeHandler = (conversation: Convo) => {
+      setAllConversations((current) => {
+        return [...current.filter((convo) => convo.id !== conversation.id)];
+      });
+    };
+
+    pusherClient.bind("conversation:update", updateHandler);
+    pusherClient.bind("conversation:new", newHandler);
+    pusherClient.bind("conversation:remove", removeHandler);
+  }, [pusherKey, router]);
   if (!conversations) {
-    <div className="h-[92%] overflow-y-auto flex justify-center items-center w-full">
+    <div className="h-[92%] overflow-y-auto flex justify-center items-center w-full text-[#f8f8e9]">
       <h1>All your Conversations are shown here</h1>
     </div>;
   }
   return (
-    <div className="max-h-[92%] overflow-y-auto w-full">
-      {conversations.map((convo) => {
-        return (
-          <div
-            className="h-18 w-full grid grid-cols-12 gap-2 mb-1 pr-4 pb-1"
-            onClick={() => handleNewConvo(convo.users[0].id)}
-          >
-            <img
-              src={`${convo.users[1].image}`}
-              className="h-fit w-fit object-contain p-1 col-span-2 rounded-full"
-            />
-            <div className="col-span-10 p-1">
-              <div className="flex h-fit w-full justify-between">
-                <p className="font-semibold">{convo.messages[0]?.body}</p>
-                <p className="font-semibold">{convo.name}</p>
-              </div>
-              <p className="mt-3">{convo.messagesIds[0]}</p>
-            </div>
-          </div>
-        );
-      })}
+    <div className="h-full max-h-[92%] p-2 bg-black border border-black overflow-y-auto w-full">
+      {allConversations.map((convo) => (
+        <ConversationBox conversation={convo} key={convo.id} />
+      ))}
     </div>
   );
 };

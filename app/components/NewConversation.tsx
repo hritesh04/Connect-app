@@ -5,9 +5,15 @@ import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-const NewConversation = ({ users }: { users: User[] }) => {
+const NewConversation = ({
+  users,
+  setIsOpen,
+}: {
+  users: User[];
+  setIsOpen: React.Dispatch<React.SetStateAction<Boolean>>;
+}) => {
   const router = useRouter();
-  const [user, setUser] = useState<User[]>([]);
+  const [user, setUser] = useState<User[]>(users);
   const [input, setInput] = useState("");
   const searchBarRef = useRef<HTMLInputElement>(null);
   const allUsers = users;
@@ -24,7 +30,7 @@ const NewConversation = ({ users }: { users: User[] }) => {
       );
       setUser(filter);
     } else {
-      setUser([]);
+      setUser(users);
     }
   };
   const handleNewConvo = async (userId: string) => {
@@ -34,39 +40,44 @@ const NewConversation = ({ users }: { users: User[] }) => {
       })
       .then((data) => router.push(`/conversations/${data.data.id}`))
       .finally(() => {
+        setIsOpen(false);
         console.log("Done");
       });
   };
   return (
-    <div className="border-2 border-black max-h-[92%] m-2 overflow-y-auto w-full">
-      <h1 className="ml-28 my-2">Start a New Conversation</h1>
-      <div className="realtive h-[8%] px-2 py-3 w-full">
+    <div className="h-full max-h-[92%] bg-black p-2 border border-black overflow-y-auto w-full">
+      <h1 className="ml-28 my-2 text-[#f8f8e9]">Start a New Conversation</h1>
+      <div className="realtive flex items-center justify-center h-[8%] px-2 py-3 w-full">
         <input
           ref={searchBarRef}
-          className="h-[90%] w-[90%] border-2 p-1 border-black"
+          className="h-[90%] w-[90%] border p-2 rounded-2xl border-white"
           type="text"
           placeholder="search..."
           onChange={(event) => handleInputChange(event.target.value)}
         />
         {input && (
-          <button className="relative right-6 top-1" onClick={clearInput}>
+          <button className="relative right-6" onClick={clearInput}>
             <RxCross2 />
           </button>
         )}
       </div>
-      <div>
+      <div className="max-h-[86%] p-1 w-full rounded-md">
         {user.map((u) => (
           <div
-            className="h-18 w-full grid grid-cols-12 gap-2 mb-1 pr-4 pb-1"
+            className="h-16 my-3 rounded-md w-full grid grid-cols-12 gap-2"
             onClick={() => handleNewConvo(u.id)}
           >
             <img
-              src={`${u.image}`}
+              src={`${
+                u.image || "https://randomuser.me/api/portraits/lego/6.jpg"
+              }`}
               className="h-fit w-fit object-contain p-1 col-span-2 rounded-full"
             />
             <div className="col-span-10 p-1">
               <div className="flex h-full w-full justify-between items-center">
-                <p className="font-semibold">{u.name}</p>
+                <p className="font-semibold text-[#f8f8e9]">
+                  {u.name?.toUpperCase()}
+                </p>
               </div>
             </div>
           </div>

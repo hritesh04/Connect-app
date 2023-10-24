@@ -18,34 +18,12 @@ const FilterBar = ({
     searchBarRef.current.value = "";
   };
   return (
-    <div className="realtive h-[8%] px-2 py-3 w-full">
-      <input
-        ref={searchBarRef}
-        className="h-[90%] w-[90%] border-2 border-black"
-        type="text"
-        placeholder="search..."
-        onChange={(event) => handleSearch(event.target.value)}
-      />
-      {input && (
-        <button className="relative right-6 top-1" onClick={clearInput}>
-          <RxCross2 />
-        </button>
-      )}
-      {input === "" ? (
-        <button
-          className="relative ml-3 top-[3px] right-1"
-          onClick={() => setOpen((state) => !state)}
-        >
-          <GrAdd />
-        </button>
-      ) : (
-        <button
-          className="relative top-[3px] right-1"
-          onClick={() => setOpen((state) => !state)}
-        >
-          <GrAdd />
-        </button>
-      )}
+    <div className="h-[8%] p-3 w-full overflow-hidden bg-black flex items-center justify-between">
+      <h1 className="font-bold text-[#f8f8e9]">Messages</h1>
+      <button className="font-bold " onClick={() => setOpen((state) => !state)}>
+        <h1 className="font-light text-3xl text-[#f8f8e9]">+</h1>
+        {/* <GrAdd style={{ color: "#f8f8e9" }} /> */}
+      </button>
     </div>
   );
 };
