@@ -5,6 +5,6 @@ const ConvoSettings = ({
 }: {
   conversation: Conversation | null;
 }) => {
-  return <div></div>;
+  return <div>User Details Change</div>;
 };
 export default ConvoSettings;
