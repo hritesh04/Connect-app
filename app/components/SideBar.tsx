@@ -1,13 +1,9 @@
 "use client";
-import { useState, useEffect, useMemo } from "react";
+import { useState } from "react";
 import AllConversations from "./AllConversations";
 import { Conversation, Message, User } from "@prisma/client";
 import FilterBar from "./FilterBar";
-import { pusherClient } from "../utils/pusher";
 import NewConversation from "./NewConversation";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import getOtherUSer from "../utils/getOtherUsers";
 type Convo = Conversation & {
   messages: Message[];
   users: User[];

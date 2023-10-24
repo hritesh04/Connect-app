@@ -1,7 +1,7 @@
 "use client";
 import { Message, User } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { pusherClient } from "../utils/pusher";
 import useConversation from "../utils/useConversation";
 type convo = Message & {
