@@ -105,60 +105,30 @@ const AuthForm = () => {
                 disabled={isLoading}
                 onChange={(event) => setUsername(event.target.value)}
               />
-              <br />
             </>
-            // <Input
-            //   disabled={isLoading}
-            //   register={register}
-            //   errors={errors}
-            //   required
-            //   id="name"
-            //   label="Name"
-            // />
           )}
-          {
-            /* <Input
-            disabled={isLoading}
-            register={register}
-            errors={errors}
-            required
-            id="email"
-            label="Email address"
-            type="email"
-          />
-          */
-            <>
-              Email
-              <br />
-              <input
-                type="email"
-                placeholder="email"
-                required={true}
-                disabled={isLoading}
-                onChange={(event) => setEmail(event.target.value)}
-              />
-              <br />
-              Password
-              <br />
-              <input
-                type="password"
-                required={true}
-                placeholder="password"
-                disabled={isLoading}
-                onChange={(event) => setPassword(event.target.value)}
-              />
-            </>
-            /*
-          <Input
-            disabled={isLoading}
-            register={register}
-            errors={errors}
-            required
-            id="password"
-            label="Password"
-            type="password"
-          /> */
-          }
+          <>
+            <br />
+            Email
+            <br />
+            <input
+              type="email"
+              placeholder="email"
+              required={true}
+              disabled={isLoading}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+            <br />
+            Password
+            <br />
+            <input
+              type="password"
+              required={true}
+              placeholder="password"
+              disabled={isLoading}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </>
           <div>
             <button
               disabled={isLoading}
