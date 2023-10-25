@@ -5,12 +5,14 @@ import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
+type Variant = "AllConversation" | "NewConversation" | "UserSettings";
+
 const NewConversation = ({
   users,
   setIsOpen,
 }: {
   users: User[];
-  setIsOpen: React.Dispatch<React.SetStateAction<Boolean>>;
+  setIsOpen: React.Dispatch<React.SetStateAction<Variant>>;
 }) => {
   const router = useRouter();
   const [user, setUser] = useState<User[]>(users);
@@ -40,7 +42,11 @@ const NewConversation = ({
       })
       .then((data) => router.push(`/conversations/${data.data.id}`))
       .finally(() => {
-        setIsOpen(false);
+        setIsOpen((prev) => {
+          return prev === "NewConversation"
+            ? "AllConversation"
+            : "NewConversation";
+        });
         console.log("Done");
       });
   };

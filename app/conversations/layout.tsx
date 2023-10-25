@@ -20,7 +20,11 @@ export default async function ChatLayout({
   const conversations = await getConversations();
   return (
     <div className="h-full bg-[#191919] w-full grid gap-0 grid-cols-10">
-      <SideBar users={users} conversations={conversations} />
+      <SideBar
+        users={users}
+        conversations={conversations}
+        currentUser={currentUser!}
+      />
       {children}
     </div>
   );

@@ -4,23 +4,28 @@ import AllConversations from "./AllConversations";
 import { Conversation, Message, User } from "@prisma/client";
 import FilterBar from "./FilterBar";
 import NewConversation from "./NewConversation";
+import UserSettings from "./UserSettings";
 type Convo = Conversation & {
   messages: Message[];
   users: User[];
 };
 
+type Variant = "AllConversation" | "NewConversation" | "UserSettings";
+
 export default function SideBar({
   users,
   conversations,
+  currentUser,
 }: {
   users: User[];
   conversations: Convo[];
+  currentUser: User;
 }) {
   // const originalConvos = await getConversations();
   const [input, setInput] = useState<string>("");
   const [allConversations, setAllConversations] =
     useState<Convo[]>(conversations);
-  const [isOpen, setIsOpen] = useState<Boolean>(false);
+  const [isOpen, setIsOpen] = useState<Variant>("AllConversation");
 
   const handleInputChange = (newInput: string) => {
     if (newInput) {
@@ -44,9 +49,12 @@ export default function SideBar({
             handleSearch={handleInputChange}
             input={input}
             setOpen={setIsOpen}
+            currentUser={currentUser}
           />
-          {isOpen ? (
+          {isOpen === "NewConversation" ? (
             <NewConversation users={users} setIsOpen={setIsOpen} />
+          ) : isOpen === "UserSettings" ? (
+            <UserSettings currentUser={currentUser} setIsOpen={setIsOpen} />
           ) : (
             <AllConversations conversations={allConversations} />
           )}

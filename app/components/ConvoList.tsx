@@ -55,19 +55,33 @@ export default function ConvoList({ messages }: { messages: convo[] }) {
     return <div>No Messages</div>;
   }
   return (
-    <div className="h-full w-full p-2 max-h-[85%] overflow-hidden overflow-y-auto">
+    <div className="h-full w-full p-2 max-h-[85%] bg-[url('https://i.pinimg.com/originals/fb/e4/1c/fbe41cd97ada760e7b38de1be18301a5.jpg')] overflow-hidden overflow-y-auto">
       {msg.map((msg) => {
         return session?.data?.user?.email === msg.sender.email ? (
-          <div key={msg.id} className="flex w-full h-10 justify-end m-1">
-            <p className="w-fit p-2 bg-blue-600 rounded-xl text-[#f8f8e9] h-full">
+          msg.body ? (
+            <div className="flex w-full h-10 justify-end m-1">
+              <p className="w-fit p-2 bg-blue-600 rounded-xl text-[#f8f8e9] h-full">
+                {msg.body}
+              </p>
+            </div>
+          ) : (
+            <div className="flex justify-end">
+              <div className="w-52 h-52 rounded-md overflow-hidden m-1">
+                <img src={`${msg.image}`} className="h-52 w-52" />
+              </div>
+            </div>
+          )
+        ) : msg.body ? (
+          <div key={msg.id} className="flex w-full m-1 h-10 justify-start">
+            <p className="w-fit p-2 bg-slate-200 rounded-xl text-black h-full">
               {msg.body}
             </p>
           </div>
         ) : (
-          <div key={msg.id} className="flex w-full m-1 h-10 justify-start">
-            <p className="w-fit p-2 text-black bg-slate-200 rounded-xl h-full">
-              {msg.body}
-            </p>
+          <div className="flex justify-start">
+            <div className="w-52 h-52 rounded-md overflow-hidden m-1">
+              <img src={`${msg.image}`} className="h-52 w-52" />
+            </div>
           </div>
         );
       })}

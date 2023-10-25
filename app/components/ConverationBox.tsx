@@ -1,7 +1,6 @@
 "use client";
 import { Conversation, Message, User } from "@prisma/client";
 import getOtherUSer from "../utils/getOtherUsers";
-import axios from "axios";
 import { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 type Convo = Conversation & {
