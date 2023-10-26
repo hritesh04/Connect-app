@@ -4,6 +4,8 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect, useRef } from "react";
 import { pusherClient } from "../utils/pusher";
 import useConversation from "../utils/useConversation";
+import { FiVideo } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 type convo = Message & {
   sender: User;
 };
@@ -11,6 +13,7 @@ export default function ConvoList({ messages }: { messages: convo[] }) {
   const session = useSession();
   const [msg, setMsg] = useState<convo[]>(messages);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const { conversationId } = useConversation();
   useEffect(() => {
@@ -59,11 +62,28 @@ export default function ConvoList({ messages }: { messages: convo[] }) {
       {msg.map((msg) => {
         return session?.data?.user?.email === msg.sender.email ? (
           msg.body ? (
-            <div className="flex w-full h-10 justify-end m-1">
-              <p className="w-fit p-2 bg-blue-600 rounded-xl text-[#f8f8e9] h-full">
-                {msg.body}
-              </p>
-            </div>
+            msg.body === "Video Call" ? (
+              <div className="flex w-full justify-end h-fit p-2 m-1">
+                <div className="p-4 flex h-fit w-48 bg-blue-600 justify-around rounded-xl text-[#f8f8e9]">
+                  <div className="w-1/4 h-full">
+                    <FiVideo size={26} />
+                  </div>
+                  <div className="pl-6 h-full w-3/4">
+                    <p className="">Video Call</p>
+
+                    <p>
+                      {new Date(msg?.createdAt).toLocaleString().split(", ")[1]}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="flex w-full h-10 justify-end m-1">
+                <p className="w-fit p-2 bg-blue-600 rounded-xl text-[#f8f8e9] h-full">
+                  {msg.body}
+                </p>
+              </div>
+            )
           ) : (
             <div className="flex justify-end">
               <div className="w-52 h-52 rounded-md overflow-hidden m-1">
@@ -72,11 +92,33 @@ export default function ConvoList({ messages }: { messages: convo[] }) {
             </div>
           )
         ) : msg.body ? (
-          <div key={msg.id} className="flex w-full m-1 h-10 justify-start">
-            <p className="w-fit p-2 bg-slate-200 rounded-xl text-black h-full">
-              {msg.body}
-            </p>
-          </div>
+          msg.body === "Video Call" ? (
+            <div className="flex w-full justify-start h-fit p-2 m-1">
+              <div
+                className="p-4 flex h-fit w-48 bg-slate-200 justify-start rounded-xl text-black"
+                onClick={() => {
+                  router.push(`${msg.id}/${session.data?.user?.name}`);
+                }}
+              >
+                <div className="w-1/4 h-full">
+                  <FiVideo size={26} />
+                </div>
+                <div className="pl-6 h-full w-3/4">
+                  <p className="">Video Call</p>
+
+                  <p>
+                    {new Date(msg?.createdAt).toLocaleString().split(", ")[1]}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div key={msg.id} className="flex w-full m-1 h-10 justify-start">
+              <p className="w-fit p-2 bg-slate-200 rounded-xl text-black h-full">
+                {msg.body}
+              </p>
+            </div>
+          )
         ) : (
           <div className="flex justify-start">
             <div className="w-52 h-52 rounded-md overflow-hidden m-1">

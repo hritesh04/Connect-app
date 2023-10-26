@@ -4,6 +4,7 @@ import EmptyConvo from "@/app/components/EmptyConvo";
 import ConvoInfo from "@/app/components/ConvoInfo";
 import ConvoList from "@/app/components/ConvoList";
 import MessageForm from "@/app/components/MessageForm";
+import getCurrentUser from "@/app/utils/getCurrentUser";
 interface IParams {
   conversationId: string;
 }

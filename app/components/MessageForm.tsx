@@ -34,7 +34,7 @@ const MessageForm = () => {
   };
 
   return (
-    <div className="flex w-full p-2">
+    <div className="flex bg-black w-full p-2">
       <CldUploadButton
         options={{ maxFiles: 1 }}
         onUpload={handleUpload}
