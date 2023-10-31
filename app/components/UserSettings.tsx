@@ -6,6 +6,7 @@ import { CldUploadButton } from "next-cloudinary";
 import { useRouter } from "next/navigation";
 import { Router } from "next/router";
 import { useRef, useState } from "react";
+import { RxCross2 } from "react-icons/rx";
 type Variant = "AllConversation" | "NewConversation" | "UserSettings";
 const UserSettings = ({
   currentUser,
@@ -36,8 +37,8 @@ const UserSettings = ({
     );
   };
   return (
-    <div className="h-full bg-black p-2 border border-black overflow-y-auto w-full">
-      <div className="h-[92%] bg-[#191919] rounded-md w-full flex p-4 flex-col">
+    <div className="h-full overflow-y-auto w-full">
+      <div className="h-[92%] rounded-md w-full flex p-4 flex-col">
         <div className="flex h-[35%] w-full flex-col justify-center items-center overflow-hidden mb-2">
           <img
             ref={imageRef}

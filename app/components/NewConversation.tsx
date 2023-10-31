@@ -51,12 +51,15 @@ const NewConversation = ({
       });
   };
   return (
-    <div className="h-full max-h-[92%] bg-black p-2 border border-black overflow-y-auto w-full">
+    <div
+      className="h-full max-h-[92%]
+     p-2 overflow-y-auto w-full"
+    >
       <h1 className="ml-28 my-2 text-[#f8f8e9]">Start a New Conversation</h1>
       <div className="realtive flex items-center justify-center h-[8%] px-2 py-3 w-full">
         <input
           ref={searchBarRef}
-          className="h-[90%] w-[90%] border p-2 rounded-2xl border-white"
+          className="h-[90%] w-[90%] border p-2 rounded-md border-white"
           type="text"
           placeholder="search..."
           onChange={(event) => handleInputChange(event.target.value)}

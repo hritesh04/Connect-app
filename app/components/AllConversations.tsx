@@ -10,7 +10,8 @@ type Convo = Conversation & {
   users: User[];
 };
 const AllConversations = ({ conversations }: { conversations: Convo[] }) => {
-  const [allConversations, setAllConversations] = useState(conversations);
+  const [allConversations, setAllConversations] =
+    useState<Convo[]>(conversations);
   const session = useSession();
   const router = useRouter();
   const pusherKey = useMemo(() => {
@@ -25,18 +26,19 @@ const AllConversations = ({ conversations }: { conversations: Convo[] }) => {
     pusherClient.subscribe(pusherKey);
 
     const updateHandler = (conversation: Convo) => {
-      setAllConversations((current) =>
-        current.map((currentConversation) => {
-          if (currentConversation.id === conversation.id) {
-            return {
-              ...currentConversation,
-              messages: conversation.messages,
-            };
-          }
-
-          return currentConversation;
-        })
-      );
+      setAllConversations((current) => {
+        const currentConvo = current.filter(
+          (current) => current.id === conversation.id
+        );
+        const updatedConvo = {
+          ...currentConvo[0],
+          messages: conversation.messages,
+        };
+        const originalConvos = current.filter(
+          (current) => current.id !== conversation.id
+        );
+        return [updatedConvo, ...originalConvos];
+      });
     };
 
     const newHandler = (conversation: Convo) => {
@@ -56,9 +58,18 @@ const AllConversations = ({ conversations }: { conversations: Convo[] }) => {
       });
     };
 
+    // const videoCallHandler = (conversation: Convo) => {
+    //   setAllConversations((current) => {
+    //     const callingConvo = current.filter(
+    //       (convo) => convo.id === conversation.id
+    //     );
+    //   });
+    //};
+
     pusherClient.bind("conversation:update", updateHandler);
     pusherClient.bind("conversation:new", newHandler);
     pusherClient.bind("conversation:remove", removeHandler);
+    //pusherClient.bind("videocall:new", videoCallHandler);
   }, [pusherKey, router]);
   if (!conversations) {
     <div className="h-[92%] overflow-y-auto flex justify-center items-center w-full text-[#f8f8e9]">
@@ -66,7 +77,7 @@ const AllConversations = ({ conversations }: { conversations: Convo[] }) => {
     </div>;
   }
   return (
-    <div className="h-full max-h-[92%] p-2 bg-black border border-black overflow-y-auto w-full">
+    <div className="h-full max-h-[92%] p-2 overflow-y-auto w-full">
       {allConversations.map((convo) => (
         <ConversationBox conversation={convo} key={convo.id} />
       ))}

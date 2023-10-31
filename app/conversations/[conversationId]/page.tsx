@@ -20,8 +20,8 @@ const Conversation = async ({ params }: { params: Params }) => {
     return <EmptyConvo />;
   }
   return (
-    <div className="h-full w-full col-span-7 p-1 overflow-hidden">
-      <div className="flex h-full w-full flex-col gap-1 rounded-xl border-2 border-black">
+    <div className="h-full w-full col-span-7 rounded-md bg-[#131313] overflow-hidden">
+      <div className="flex h-full w-full flex-col gap-1 rounded-xl">
         <ConvoInfo conversation={conversation} />
         <ConvoList messages={messages} />
         <MessageForm />

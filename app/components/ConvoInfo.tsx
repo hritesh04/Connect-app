@@ -1,6 +1,6 @@
 "use client";
 import { Conversation, Message, User } from "@prisma/client";
-import getOtherUSer from "../utils/getOtherUsers";
+import getOtherUser from "../utils/getOtherUsers";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiVideo } from "react-icons/fi";
 import { usePathname, useRouter } from "next/navigation";
@@ -26,9 +26,9 @@ const ConvoInfo: React.FC<ConvoInfoProps> = ({ conversation }) => {
   const path = usePathname();
   const session = useSession();
   const currentUser = useMemo(() => session.data?.user?.name, [router]);
-  const otherUser = getOtherUSer(conversation);
+  const otherUser = getOtherUser(conversation);
   return (
-    <div className="bg-black h-[10%] w-full flex items-center justify-between p-2 shadow-[rgba(0,0,0,0.8)_0px_2px_5px_0px,_rgba(256,256,256,0.8)_0px_1px_1px_0px] mb-2">
+    <div className="h-[10%] w-full flex items-center justify-between p-2 mb-2">
       <div className="h-full flex justify-start items-center">
         <img
           src={`${

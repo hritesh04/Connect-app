@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import getCurrentUser from "@/app/utils/getCurrentUser";
 import { pusherServer } from "@/app/utils/pusher";
 import prisma from "@/app/utils/prismadb";
+import getOtherUSer from "@/app/utils/getOtherUsers";
+import getConversationById from "@/app/utils/getConversationById";
 
 export async function POST(request: Request) {
   try {
@@ -46,7 +48,11 @@ export async function POST(request: Request) {
         messages: {},
       },
     });
-
+    // if (newMessage.body === "Video Call") {
+    //   const conversation = await getConversationById(conversationId);
+    //   const otherUser = getOtherUSer(conversation!);
+    //   await pusherServer.trigger(otherUser.email!, "videocall:new", newMessage);
+    // }
     await pusherServer.trigger(conversationId, "messages:new", newMessage);
 
     const lastMessage =

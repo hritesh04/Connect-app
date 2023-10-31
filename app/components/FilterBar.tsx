@@ -23,7 +23,7 @@ const FilterBar = ({
     searchBarRef.current.value = "";
   };
   return (
-    <div className="h-[8%] p-2 w-full overflow-hidden bg-black flex items-center justify-between">
+    <div className="h-[8%] p-2 w-full overflow-hidden flex items-center justify-between">
       <img
         src={`${currentUser?.image}`}
         className="h-full object-contain rounded-full"

@@ -2,8 +2,8 @@ import { useSession } from "next-auth/react";
 import { useMemo } from "react";
 import { User, Message, Conversation } from "@prisma/client";
 type Convo = Conversation & {
-  messages?: Partial<Message>[];
   users: User[];
+  messages?: Partial<Message>[];
 };
 
 const getOtherUSer = (conversation: Convo) => {
