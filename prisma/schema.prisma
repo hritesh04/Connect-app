@@ -15,15 +15,14 @@ model User {
   emailVerified DateTime?
   image     String?
   password  String?
-  conversationIds String[]
-  conversations Conversation[] @relation("allConversation")
-  accounts Account[]
+  conversations Conversation[]
+  accounts Account?
   messages Message[]
 }
 
 model Account {
   id        String   @id @default(cuid())
-  userId    String
+  userId    String  @unique
   type      String
   provider  String
   providerAccountId String
@@ -43,11 +42,12 @@ model Account {
 model Conversation {
   id String @id @default(cuid())
   name String?
-  isGroup Boolean?
+  image String?
+  isGroup Boolean? @default(false)
   messagesIds String[]
   messages Message[]
   userIds String[]
-  users User[] @relation("allConversation")
+  users User[]
 }
 
 model Message {
