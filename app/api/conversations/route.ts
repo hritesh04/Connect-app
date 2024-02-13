@@ -18,13 +18,12 @@ export async function POST(request: Request) {
       where: {
         OR: [
           {
-            userIds: {
-              equals: [currentUser.id, userId],
-            },
-          },
-          {
-            userIds: {
-              equals: [userId, currentUser.id],
+            users: {
+              every: {
+                id: {
+                  in: [userId, currentUser.id],
+                },
+              },
             },
           },
         ],

@@ -10,9 +10,17 @@ const getConversations = async () => {
   try {
     const allConversations = await prisma.conversation.findMany({
       where: {
-        userIds: {
-          has: currentUser.id,
-        },
+        OR: [
+          {
+            users: {
+              some: {
+                id: {
+                  in: [currentUser.id],
+                },
+              },
+            },
+          },
+        ],
       },
       include: {
         users: true,
@@ -26,6 +34,7 @@ const getConversations = async () => {
         },
       },
     });
+    console.log(allConversations);
 
     if (!allConversations) {
       return [];

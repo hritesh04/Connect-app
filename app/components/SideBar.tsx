@@ -51,11 +51,15 @@ export default function SideBar({
             setOpen={setIsOpen}
             currentUser={currentUser}
           />
-          {isOpen === "NewConversation" ? (
+          {isOpen === "NewConversation" && (
             <NewConversation users={users} setIsOpen={setIsOpen} />
-          ) : isOpen === "UserSettings" ? (
+          )}
+
+          {isOpen === "UserSettings" && (
             <UserSettings currentUser={currentUser} setIsOpen={setIsOpen} />
-          ) : (
+          )}
+
+          {isOpen !== "NewConversation" && isOpen !== "UserSettings" && (
             <AllConversations conversations={allConversations} />
           )}
         </div>
