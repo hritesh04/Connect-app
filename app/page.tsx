@@ -9,15 +9,14 @@ const Auth = () => {
         min-h-full 
         flex-col 
         justify-center 
-        py-12 
         sm:px-6 
         lg:px-8 
-        bg-gray-100
+        bg-[#131313]
       "
     >
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <img
-          className="h-32 h- mx-auto w-auto"
+          className="h-32 mx-auto w-auto"
           src="https://i.ibb.co/1vC8gb7/output-onlinepngtools.png"
           alt="Logo"
         />
@@ -28,7 +27,7 @@ const Auth = () => {
             text-3xl 
             font-bold 
             tracking-tight 
-            text-gray-900
+            text-white
           "
         >
           Sign in to your account
