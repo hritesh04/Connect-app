@@ -43,7 +43,7 @@ export default function SideBar({
 
   return (
     <>
-      <div className="h-full col-span-3 overflow-hidden rounded-xl shadow-lg shadow-[#232323] bg-[#131313]">
+      <div className="h-full col-span-3 w-1/4 overflow-hidden border-r border-[#15161c]">
         <div className="h-full w-full">
           <FilterBar
             handleSearch={handleInputChange}

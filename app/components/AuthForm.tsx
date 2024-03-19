@@ -83,14 +83,13 @@ const AuthForm = () => {
   };
 
   return (
-    <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div className="sm:w-full sm:max-w-md">
       <div
         className="
          bg-gray-100
           px-4
           py-8
-          shadow
-          sm:rounded-lg
+          border-l-2
           sm:px-10
         "
       >
@@ -104,9 +103,7 @@ const AuthForm = () => {
                 disabled={isLoading}
                 placeholder="Username"
                 onChange={(event) => setUsername(event.target.value)}
-                className=" bg-transparent p-1 rounded-md ring-1 
-                ring-inset 
-                ring-gray-300 "
+                className=" bg-transparent p-1 rounded-md border-2"
               />
             </>
           )}
@@ -114,23 +111,19 @@ const AuthForm = () => {
             <p>Email</p>
             <input
               type="email"
-              placeholder="email"
+              placeholder="Email"
               required={true}
               disabled={isLoading}
-              className=" bg-transparent p-1 rounded-md ring-1 
-                ring-inset 
-                ring-gray-300 "
+              className=" bg-transparent p-1 rounded-md border-2"
               onChange={(event) => setEmail(event.target.value)}
             />
             <p>Password</p>
             <input
               type="password"
               required={true}
-              placeholder="password"
+              placeholder="Password"
               disabled={isLoading}
-              className=" bg-transparent p-1 rounded-md ring-1 
-                ring-inset 
-                ring-gray-300 "
+              className=" bg-transparent p-1 rounded-md border-2"
               onChange={(event) => setPassword(event.target.value)}
             />
           </>
@@ -139,9 +132,7 @@ const AuthForm = () => {
               disabled={isLoading}
               type="submit"
               onClick={() => onSubmit({ username, email, password })}
-              className="ring-1 
-              ring-inset 
-              ring-gray-300 rounded-md p-2 bg-white"
+              className=" border-2 rounded-md p-2 bg-white"
             >
               {variant === "LOGIN" ? "Sign in" : "Register"}
             </button>
@@ -180,13 +171,12 @@ const AuthForm = () => {
         </div>
         <div
           className="
-            flex 
+            flex
             gap-2 
             justify-center 
             text-sm 
             mt-6 
-            px-2 
-            text-gray-500
+            px-2 flex-col items-center text-gray-500
           "
         >
           <div>

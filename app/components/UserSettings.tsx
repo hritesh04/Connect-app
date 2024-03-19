@@ -40,11 +40,13 @@ const UserSettings = ({
     <div className="h-full overflow-y-auto w-full">
       <div className="h-[92%] rounded-md w-full flex p-4 flex-col">
         <div className="flex h-[35%] w-full flex-col justify-center items-center overflow-hidden mb-2">
-          <img
-            ref={imageRef}
-            src={`${currentUser.image}`}
-            className="h-3/4 mb-3 w-fit object-contain rounded-full"
-          />
+          <div className=" h-full w-full flex items-center justify-center">
+            <img
+              ref={imageRef}
+              src={`${currentUser.image}`}
+              className="h-3/4 mb-3 w-1/2 object-cover rounded-full"
+            />
+          </div>
           <CldUploadButton
             options={{ maxFiles: 1 }}
             onUpload={handleUpload}

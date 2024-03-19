@@ -55,11 +55,11 @@ const NewConversation = ({
       className="h-full max-h-[92%]
      p-2 overflow-y-auto w-full"
     >
-      <h1 className="ml-28 my-2 text-[#f8f8e9]">Start a New Conversation</h1>
+      <h1 className="text-[#f8f8e9] text-center">Start a New Conversation</h1>
       <div className="realtive flex items-center justify-center h-[8%] px-2 py-3 w-full">
         <input
           ref={searchBarRef}
-          className="h-[90%] w-[90%] border p-2 rounded-md border-white"
+          className="h-[90%] w-[90%] border p-4 rounded-md border-white"
           type="text"
           placeholder="search..."
           onChange={(event) => handleInputChange(event.target.value)}
@@ -70,19 +70,19 @@ const NewConversation = ({
           </button>
         )}
       </div>
-      <div className="max-h-[86%] p-1 w-full rounded-md">
+      <div className="max-h-[86%] p-2 w-full rounded-md overflow-y-auto no-scrollbar">
         {user.map((u) => (
           <div
-            className="h-16 my-3 rounded-md w-full grid grid-cols-12 gap-2"
+            className=" h-[4rem] hover:bg-slate-400 rounded-md w-full grid grid-cols-12 gap-2 mb-4"
             onClick={() => handleNewConvo(u.id)}
           >
             <img
               src={`${
                 u.image || "https://randomuser.me/api/portraits/lego/6.jpg"
               }`}
-              className="h-fit w-fit object-contain p-1 col-span-2 rounded-full"
+              className="h-full w-full object-cover p-1 col-span-3 rounded-full"
             />
-            <div className="col-span-10 p-1">
+            <div className="col-span-9 p-1">
               <div className="flex h-full w-full justify-between items-center">
                 <p className="font-semibold text-[#f8f8e9]">
                   {u.name?.toUpperCase()}

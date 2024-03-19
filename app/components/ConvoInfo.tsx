@@ -25,26 +25,27 @@ const ConvoInfo: React.FC<ConvoInfoProps> = ({ conversation }) => {
   const router = useRouter();
   const path = usePathname();
   const session = useSession();
-  const currentUser = useMemo(() => session.data?.user?.name, [router]);
+  const currentUser = useMemo(() => session.data?.user?.name, []);
+  console.log(session);
   const otherUser = getOtherUser(conversation);
   return (
-    <div className="h-[10%] w-full flex items-center justify-between p-2 mb-2">
+    <div className="h-[15%] w-full flex items-center justify-between p-2">
       <div className="h-full flex justify-start items-center">
         <img
           src={`${
             otherUser.image || "https://randomuser.me/api/portraits/lego/6.jpg"
           }`}
-          className="h-16 w-16 object-contain rounded-full"
+          className="h-16 w-16 object-cover rounded-full"
         />
         <p className="ml-4 text-[#f6f6e9]">{otherUser.name?.toUpperCase()}</p>
       </div>
       <div className="flex mr-4">
         <FiVideo
-          size={20}
+          size={24}
           className="text-white mr-4"
           onClick={() => handleVideoCall()}
         />
-        <BsThreeDotsVertical size={20} className="text-white" />
+        <BsThreeDotsVertical size={24} className="text-white" />
       </div>
     </div>
   );

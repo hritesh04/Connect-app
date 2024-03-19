@@ -4,6 +4,8 @@ import { useMemo, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import { HiPaperAirplane, HiPhoto } from "react-icons/hi2";
 import { CldUploadButton } from "next-cloudinary";
+import { IoIosSend } from "react-icons/io";
+
 const MessageForm = () => {
   const [input, setInput] = useState("");
   const params = useParams();
@@ -34,24 +36,30 @@ const MessageForm = () => {
   };
 
   return (
-    <div className="flex w-full p-2">
+    <div className="flex w-full h-[10%] items-center p-2">
       <CldUploadButton
         options={{ maxFiles: 1 }}
         onUpload={handleUpload}
         uploadPreset="aak2eqva"
       >
         <button>
-          <HiPhoto size={30} className="text-[#f8f8e9]" />
+          <HiPhoto size={35} className="text-[#f8f8e9]" />
         </button>
       </CldUploadButton>
       <input
         type="text"
+        placeholder="Write a reply..."
         onChange={(event) => setInput(event.target.value)}
-        className="w-full p-1 border-2 border-[#f8f8e9] text-black mx-2 rounded-md"
+        className="w-full p-1 border-2 border-[#f8f8e9] text-black mx-2 rounded-md outline-none"
         ref={msgRef}
       />
-      <button onClick={() => handleSubmit(input)}>
-        <HiPaperAirplane size={20} className="text-[#f8f8e9]" />
+      <button
+        onClick={() => handleSubmit(input)}
+        className=" bg-[#5c61ed] h-full w-1/12 flex items-center justify-center rounded-md"
+      >
+        {/* <HiPaperAirplane size={20} className="text-[#f8f8e9]" /> */}
+        <IoIosSend size={20} className="text-[#f8f8e9]" />
+        <p className=" text-white pl-2">SEND</p>
       </button>
     </div>
   );

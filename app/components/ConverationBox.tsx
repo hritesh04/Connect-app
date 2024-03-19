@@ -43,27 +43,27 @@ export default function ConversationBox({
 
   return (
     <div
-      className="h-18 w-full my-3 grid grid-cols-12 gap-2 mb-1 pr-4 pb-1"
+      className="h-18 w-full grid grid-cols-12 p-2 gap-2 mb-1 hover:bg-[#3f405c]"
       onClick={handleClick}
     >
       <img
         src={`${
           otherUser.image || "https://randomuser.me/api/portraits/lego/6.jpg"
         }`}
-        className="h-fit w-fit object-contain p-1 col-span-2 rounded-full"
+        className="h-full w-full object-cover col-span-3 rounded-full"
       />
-      <div className="col-span-10 p-1">
+      <div className="col-span-9 p-1">
         <div className="flex h-fit w-full justify-between">
-          <p className="font-semibold text-[#f8f8e9]">
+          <p className="font-semibold text-[#d7dce9]">
             {otherUser?.name?.toUpperCase()}
           </p>
-          <p className="font-extralight text-[#f8f8e9]">
+          <p className="font-extralight text-[#d7dce9]">
             {lastMesageTime === "Invalid Date"
               ? ""
               : lastMesageTime.toLowerCase()}
           </p>
         </div>
-        <p className="mt-3 font-thin text-[#f8f8e9]">{lastMesagePreview}</p>
+        <p className="mt-3 font-thin text-[#d7dce9]">{lastMesagePreview}</p>
       </div>
     </div>
   );

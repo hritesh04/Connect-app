@@ -23,16 +23,20 @@ const FilterBar = ({
     searchBarRef.current.value = "";
   };
   return (
-    <div className="h-[8%] p-2 w-full overflow-hidden flex items-center justify-between">
-      <img
-        src={`${currentUser?.image}`}
-        className="h-full object-contain rounded-full"
-        onClick={() =>
-          setOpen((prev) => {
-            return prev === "UserSettings" ? "AllConversation" : "UserSettings";
-          })
-        }
-      />
+    <div className="h-[12%] p-2 w-full overflow-hidden flex items-center justify-between">
+      <div className=" h-full w-16">
+        <img
+          src={`${currentUser?.image}`}
+          className="h-full w-full object-cover rounded-full"
+          onClick={() =>
+            setOpen((prev) => {
+              return prev === "UserSettings"
+                ? "AllConversation"
+                : "UserSettings";
+            })
+          }
+        />
+      </div>
       <h1 className="font-bold text-[#f8f8e9]">Messages</h1>
       <button
         className="font-bold "
