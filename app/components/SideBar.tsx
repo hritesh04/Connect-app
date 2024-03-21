@@ -52,7 +52,11 @@ export default function SideBar({
             currentUser={currentUser}
           />
           {isOpen === "NewConversation" && (
-            <NewConversation users={users} setIsOpen={setIsOpen} />
+            <NewConversation
+              users={users}
+              setIsOpen={setIsOpen}
+              setAllConvo={setAllConversations}
+            />
           )}
 
           {isOpen === "UserSettings" && (

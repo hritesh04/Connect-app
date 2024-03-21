@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { BsGithub, BsGoogle } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import AuthSocialButton from "./AuthSocialButton";
+import { TbLoaderQuarter } from "react-icons/tb";
 
 type Variant = "LOGIN" | "REGISTER";
 
@@ -132,9 +133,19 @@ const AuthForm = () => {
               disabled={isLoading}
               type="submit"
               onClick={() => onSubmit({ username, email, password })}
-              className=" border-2 rounded-md p-2 bg-white"
+              className=" border-2 w-20  rounded-md p-2 bg-white"
             >
-              {variant === "LOGIN" ? "Sign in" : "Register"}
+              {variant === "LOGIN" ? (
+                isLoading ? (
+                  <TbLoaderQuarter className=" animate-spin m-auto" />
+                ) : (
+                  "Sign in"
+                )
+              ) : isLoading ? (
+                <TbLoaderQuarter className=" animate-spin m-auto" />
+              ) : (
+                "Register"
+              )}
             </button>
           </div>
         </div>

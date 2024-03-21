@@ -4,15 +4,23 @@ import { RxCross2 } from "react-icons/rx";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { Conversation, Message } from "@prisma/client";
 
 type Variant = "AllConversation" | "NewConversation" | "UserSettings";
+
+type Convo = Conversation & {
+  messages: Message[];
+  users: User[];
+};
 
 const NewConversation = ({
   users,
   setIsOpen,
+  setAllConvo,
 }: {
   users: User[];
   setIsOpen: React.Dispatch<React.SetStateAction<Variant>>;
+  setAllConvo: React.Dispatch<React.SetStateAction<Convo[]>>;
 }) => {
   const router = useRouter();
   const [user, setUser] = useState<User[]>(users);
@@ -40,7 +48,12 @@ const NewConversation = ({
       .post("/api/conversations", {
         userId: userId,
       })
-      .then((data) => router.push(`/conversations/${data.data.id}`))
+      .then((data) => {
+        setAllConvo((prev) => {
+          return [...prev, data.data];
+        });
+        router.push(`/conversations/${data.data.id}`);
+      })
       .finally(() => {
         setIsOpen((prev) => {
           return prev === "NewConversation"

@@ -5,9 +5,7 @@ import ConvoInfo from "@/app/components/ConvoInfo";
 import ConvoList from "@/app/components/ConvoList";
 import MessageForm from "@/app/components/MessageForm";
 import getCurrentUser from "@/app/utils/getCurrentUser";
-interface IParams {
-  conversationId: string;
-}
+
 interface Params {
   conversationId: string;
 }
@@ -19,6 +17,7 @@ const Conversation = async ({ params }: { params: Params }) => {
   if (!conversation) {
     return <EmptyConvo />;
   }
+
   return (
     <div className="h-full w-full col-span-7 rounded-md px-2 overflow-hidden">
       <div className="flex h-full w-full flex-col gap-1 rounded-xl">

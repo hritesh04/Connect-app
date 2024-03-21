@@ -74,7 +74,7 @@ const UserSettings = ({
           className="bg-[#f6f6e9] w-1/3 mb-4 p-2 rounded-md h-10"
           onClick={handleSaveChanges}
         >
-          Save Changes
+          Save
         </button>
         <button
           className="bg-[#f6f6e9] w-1/3 p-2 rounded-md h-10"

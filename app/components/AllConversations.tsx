@@ -50,6 +50,7 @@ const AllConversations = ({ conversations }: { conversations: Convo[] }) => {
 
         return [conversation, ...current];
       });
+      console.log(allConversations);
     };
 
     const removeHandler = (conversation: Convo) => {
