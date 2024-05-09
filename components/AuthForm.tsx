@@ -89,9 +89,10 @@ const AuthForm = () => {
         className="
          bg-gray-100
           px-4
-          py-8
-          border-l-2
-          sm:px-10
+          md:py-8
+          md:border-l-2
+          sm:px-24
+          mb-10
         "
       >
         <div className="space-y-3">

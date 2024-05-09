@@ -19,7 +19,7 @@ const Conversation = async ({ params }: { params: Params }) => {
   }
 
   return (
-    <div className="h-full w-full col-span-7 rounded-md px-2 overflow-hidden">
+    <div className="h-full w-full rounded-md px-2 overflow-hidden">
       <div className="flex h-full w-full flex-col gap-1 rounded-xl">
         <ConvoInfo conversation={conversation} />
         <ConvoList messages={messages} />

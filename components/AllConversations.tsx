@@ -8,7 +8,7 @@ type Convo = Conversation & {
 const AllConversations = ({ conversations }: { conversations: Convo[] }) => {
   if (!conversations || conversations.length == 0) {
     return (
-      <div className="h-[92%] overflow-y-auto flex justify-center items-center w-full text-[#f8f8e9]">
+      <div className="h-[92%] md:w-1/3 lg:w-1/2 overflow-y-auto flex justify-center items-center w-full text-[#f8f8e9]">
         <h1>All your Conversations are shown here</h1>
       </div>
     );

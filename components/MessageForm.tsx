@@ -55,7 +55,7 @@ const MessageForm = () => {
       />
       <button
         onClick={() => handleSubmit(input)}
-        className=" bg-[#5c61ed] h-full w-1/12 flex items-center justify-center rounded-md"
+        className=" bg-[#5c61ed] h-full md:w-1/12 flex items-center justify-center rounded-md p-2"
       >
         {/* <HiPaperAirplane size={20} className="text-[#f8f8e9]" /> */}
         <IoIosSend size={20} className="text-[#f8f8e9]" />

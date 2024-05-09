@@ -60,9 +60,9 @@ export default function ConversationBox({
         src={`${
           otherUser.image || "https://randomuser.me/api/portraits/lego/6.jpg"
         }`}
-        className="h-full w-full object-cover col-span-3 rounded-full"
+        className="h-full w-full object-cover md:col-span-3 col-span-4 rounded-full"
       />
-      <div className="col-span-9 p-1">
+      <div className="col-span-8 md:col-span-9 p-1">
         <div className="flex h-fit w-full justify-between">
           <p className="font-semibold text-[#d7dce9]">
             {otherUser?.name?.toUpperCase()}

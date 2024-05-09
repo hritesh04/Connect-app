@@ -8,6 +8,7 @@ import UserSettings from "./UserSettings";
 import { pusherClient } from "@/utils/pusher";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { IoClose, IoMenuOutline } from "react-icons/io5";
 type Convo = Conversation & {
   messages: Message[];
   users: User[];
@@ -24,7 +25,7 @@ export default function SideBar({
   conversations: Convo[];
   currentUser: User;
 }) {
-  // const originalConvos = await getConversations();
+  const [sideBar, setSideBar] = useState(false);
   const [input, setInput] = useState<string>("");
   const [allConversations, setAllConversations] =
     useState<Convo[]>(conversations);
@@ -116,29 +117,55 @@ export default function SideBar({
 
   return (
     <>
-      <div className="h-full col-span-3 w-1/4 overflow-hidden border-r border-[#15161c]">
-        <div className="h-full w-full">
-          <FilterBar
-            handleSearch={handleInputChange}
-            input={input}
-            setOpen={setIsOpen}
-            currentUser={currentUser}
+      <div
+        className={`min-w-12 md:border-r border-[#15161c] h-full md:w-1/4 overflow-hidden ${
+          sideBar ? " absolute" : "relative"
+        }`}
+      >
+        <IoMenuOutline
+          className={`md:hidden relative top-4 left-4 cursor-pointer ${
+            sideBar ? "hidden" : ""
+          }`}
+          size={50}
+          style={{ color: "white" }}
+          onClick={() => setSideBar(!sideBar)}
+        />
+        <div
+          className={`md:block w-3/4 sm:w-1/2 md:w-full flex flex-col items-end h-full ${
+            sideBar ? "bg-black" : "hidden"
+          }`}
+        >
+          <IoClose
+            size={32}
+            color="white"
+            className={`md:hidden relative top-4 md:left-72 cursor-pointer ${
+              sideBar ? "" : "hidden"
+            }`}
+            onClick={() => setSideBar(!sideBar)}
           />
-          {isOpen === "NewConversation" && (
-            <NewConversation
-              users={users}
-              setIsOpen={setIsOpen}
-              setAllConvo={setAllConversations}
+          <div className="h-full">
+            <FilterBar
+              handleSearch={handleInputChange}
+              input={input}
+              setOpen={setIsOpen}
+              currentUser={currentUser}
             />
-          )}
+            {isOpen === "NewConversation" && (
+              <NewConversation
+                users={users}
+                setIsOpen={setIsOpen}
+                setAllConvo={setAllConversations}
+              />
+            )}
 
-          {isOpen === "UserSettings" && (
-            <UserSettings currentUser={currentUser} setIsOpen={setIsOpen} />
-          )}
+            {isOpen === "UserSettings" && (
+              <UserSettings currentUser={currentUser} setIsOpen={setIsOpen} />
+            )}
 
-          {isOpen !== "NewConversation" && isOpen !== "UserSettings" && (
-            <AllConversations conversations={allConversations} />
-          )}
+            {isOpen !== "NewConversation" && isOpen !== "UserSettings" && (
+              <AllConversations conversations={allConversations} />
+            )}
+          </div>
         </div>
       </div>
     </>
