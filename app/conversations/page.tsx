@@ -1,4 +1,4 @@
-import EmptyConvo from "../components/EmptyConvo";
+import EmptyConvo from "../../components/EmptyConvo";
 
 export default function chat() {
   return (

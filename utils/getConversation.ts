@@ -10,6 +10,7 @@ const getConversations = async () => {
   try {
     const allConversations = await prisma.conversation.findMany({
       where: {
+        //AND
         OR: [
           {
             users: {
@@ -34,8 +35,6 @@ const getConversations = async () => {
         },
       },
     });
-    console.log(allConversations);
-
     if (!allConversations) {
       return [];
     }

@@ -1,7 +1,7 @@
-import getUsers from "../utils/getUsers";
-import SideBar from "../components/SideBar";
-import getConversations from "../utils/getConversation";
-import getCurrentUser from "../utils/getCurrentUser";
+import getUsers from "../../utils/getUsers";
+import SideBar from "../../components/SideBar";
+import getConversations from "../../utils/getConversation";
+import getCurrentUser from "../../utils/getCurrentUser";
 
 export default async function ChatLayout({
   children,

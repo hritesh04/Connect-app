@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import prisma from "../../utils/prismadb";
-import getCurrentUser from "@/app/utils/getCurrentUser";
+import prisma from "../../../utils/prismadb";
+import getCurrentUser from "@/utils/getCurrentUser";
 
 export async function POST(req: Request) {
   try {
@@ -24,7 +24,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json("Success");
   } catch (error) {
-    console.log(error, "ERROR_MESSAGES");
     return new NextResponse("Error", { status: 500 });
   }
 }

@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 
-import getCurrentUser from "@/app/utils/getCurrentUser";
-import { pusherServer } from "@/app/utils/pusher";
-import prisma from "@/app/utils/prismadb";
-import getOtherUSer from "@/app/utils/getOtherUsers";
-import getConversationById from "@/app/utils/getConversationById";
+import getCurrentUser from "@/utils/getCurrentUser";
+import { pusherServer } from "@/utils/pusher";
+import prisma from "@/utils/prismadb";
+import getOtherUSer from "@/utils/getOtherUsers";
+import getConversationById from "@/utils/getConversationById";
 
 export async function POST(request: Request) {
   try {
@@ -67,7 +67,6 @@ export async function POST(request: Request) {
 
     return NextResponse.json(newMessage);
   } catch (error) {
-    console.log(error, "ERROR_MESSAGES");
     return new NextResponse("Error", { status: 500 });
   }
 }

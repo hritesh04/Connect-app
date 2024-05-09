@@ -1,8 +1,8 @@
-import getCurrentUser from "../../utils/getCurrentUser";
+import getCurrentUser from "../../../utils/getCurrentUser";
 import { NextResponse } from "next/server";
 
-import prisma from "../../utils/prismadb";
-import { pusherServer } from "../../utils/pusher";
+import prisma from "../../../utils/prismadb";
+import { pusherServer } from "../../../utils/pusher";
 
 export async function POST(request: Request) {
   try {
@@ -53,14 +53,11 @@ export async function POST(request: Request) {
         users: true,
       },
     });
-
     newConversation.users.map((user) => {
-      if (user.email) {
-        pusherServer.trigger(user.email, "conversation:new", newConversation);
+      if (user.id == userId) {
+        pusherServer.trigger(user.email!, "conversation:new", newConversation);
       }
     });
-
-    console.log(newConversation.id);
 
     return NextResponse.json(newConversation);
   } catch (error) {

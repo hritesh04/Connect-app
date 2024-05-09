@@ -1,10 +1,10 @@
-import getMessages from "../../utils/getMessages";
-import getConversationById from "../../utils/getConversationById";
-import EmptyConvo from "@/app/components/EmptyConvo";
-import ConvoInfo from "@/app/components/ConvoInfo";
-import ConvoList from "@/app/components/ConvoList";
-import MessageForm from "@/app/components/MessageForm";
-import getCurrentUser from "@/app/utils/getCurrentUser";
+import getMessages from "../../../utils/getMessages";
+import getConversationById from "../../../utils/getConversationById";
+import EmptyConvo from "@/components/EmptyConvo";
+import ConvoInfo from "@/components/ConvoInfo";
+import ConvoList from "@/components/ConvoList";
+import MessageForm from "@/components/MessageForm";
+import getCurrentUser from "@/utils/getCurrentUser";
 
 interface Params {
   conversationId: string;

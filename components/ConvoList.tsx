@@ -54,10 +54,8 @@ export default function ConvoList({ messages }: { messages: convo[] }) {
   }, [conversationId, msg]);
 
   if (!msg) {
-    console.log(messages);
     return <div>No Messages</div>;
   }
-  // bg-[url('https://i.pinimg.com/originals/fb/e4/1c/fbe41cd97ada760e7b38de1be18301a5.jpg')]
   return (
     <div className="h-full w-full p-2 max-h-[85%] overflow-hidden overflow-y-auto no-scrollbar">
       {msg.map((msg) => {

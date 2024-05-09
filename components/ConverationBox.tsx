@@ -17,7 +17,6 @@ export default function ConversationBox({
   const otherUser = getOtherUSer(conversation);
 
   const lastMesage = useMemo(() => {
-    console.log(conversation);
     const msg = conversation?.messages;
     if (!msg) {
       return {

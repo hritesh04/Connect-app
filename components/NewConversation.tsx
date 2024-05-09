@@ -50,7 +50,7 @@ const NewConversation = ({
       })
       .then((data) => {
         setAllConvo((prev) => {
-          return [...prev, data.data];
+          return [data.data, ...prev];
         });
         router.push(`/conversations/${data.data.id}`);
       })
@@ -60,7 +60,6 @@ const NewConversation = ({
             ? "AllConversation"
             : "NewConversation";
         });
-        console.log("Done");
       });
   };
   return (

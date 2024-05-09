@@ -26,7 +26,7 @@ const ConvoInfo: React.FC<ConvoInfoProps> = ({ conversation }) => {
   const path = usePathname();
   const session = useSession();
   const currentUser = useMemo(() => session.data?.user?.name, []);
-  console.log(session);
+
   const otherUser = getOtherUser(conversation);
   return (
     <div className="h-[15%] w-full flex items-center justify-between p-2">
