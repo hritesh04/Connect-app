@@ -67,7 +67,9 @@ const NewConversation = ({
       className="h-full max-h-[92%]
      p-2 overflow-y-auto w-full"
     >
-      <h1 className="text-[#f8f8e9] text-center">Start a New Conversation</h1>
+      <h1 className="text-[#f8f8e9] text-center mb-4">
+        Start a New Conversation
+      </h1>
       <div className="realtive flex items-center justify-center h-[8%] px-2 py-3 w-full">
         <input
           ref={searchBarRef}
